@@ -3,12 +3,14 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { startLogout } from '../actions/auth';
 
+// Header is included in Public and Prive Routers
+
 export const Header = ({ startLogout }) => (
   <header className="header">
     <div className="content-container">
       <div className="header__content">
         <Link className="header__title" to="/dashboard">
-          <h1>Boilerplate</h1>
+          <h1>Movie Reviews</h1>
         </Link>
         <button className="button button--link" onClick={startLogout}>Logout</button>
       </div>

@@ -9,7 +9,8 @@ yarn run dev-server    :   runs the dev server
 
 # setup instructions
 
-The app uses firebase so you must install that first
+The app uses firebase so you must install that first.  If you wish to bypass this I recommend setting the dashboard to be a
+private route in src/routers/AppRouter.js.  If you go in this direction you will need to change other firebase vars.
 
 0.  At the console enter "yarn install" to build dependencies
 1.  Create a firebase project at console.firebase.google.com
