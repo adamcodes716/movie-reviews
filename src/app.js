@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import AppRouter, { history } from './routers/AppRouter';
 import configureStore from './store/configureStore';
+import { startSetMovies } from './actions/movies';
 import { login, logout } from './actions/auth';
 import 'normalize.css/normalize.css';
 import './styles/styles.scss';
@@ -26,13 +27,23 @@ const renderApp = () => {
 
 ReactDOM.render(<LoadingPage />, document.getElementById('app'));
 
-firebase.auth().onAuthStateChanged((user) => {
+firebase.auth().onAuthStateChanged((user) => {  // runs on user login or logout
   if (user) {
-    store.dispatch(login(user.uid));
+    console.log('log in. ', user.uid);
+    store.dispatch(login(user.uid));  // update the store
+    /*
+    // will need to put in a command here to load store
     renderApp();
     if (history.location.pathname === '/') {
       history.push('/dashboard');
     }
+    */
+   store.dispatch(startSetMovies()).then(() => {  // load movie dataset
+     renderApp();
+      if (history.location.pathname ==='/') { // check to see if they are on login page - just logged in
+        history.push('/dashboard');  // just logged in, redirect to dashboard
+      };
+    });
   } else {
     store.dispatch(logout());
     renderApp();
