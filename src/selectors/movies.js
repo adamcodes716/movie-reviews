@@ -3,8 +3,6 @@ import moment from 'moment';
 // Get visible movies
 
 
-
-
 export default (movies, { text, sortBy, startDate, endDate }) => {
   return movies.filter((movie) => {
     const createdAtMoment = moment(expense.createdAt);

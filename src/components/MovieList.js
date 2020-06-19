@@ -13,7 +13,7 @@ export const MovieList = (props) => (
     </div>  
     <div className="list-body">
       {
-        /*
+        
          props.movies.length === 0 ? (
           <div className="liste-item--message">
             <span><p>No Movies</p></span>
@@ -23,7 +23,7 @@ export const MovieList = (props) => (
               return <MovieListItem key={movie.id} {...movie} />;
             })
           )
-        */ 
+        
       }
     </div>
       {
