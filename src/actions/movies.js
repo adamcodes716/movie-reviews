@@ -58,6 +58,7 @@ export const setMovies = (movies) => ({
         const movies = [];
   
         snapshot.forEach((childSnapshot) => {
+            console.log ('getting a child');
           movies.push({
             id: childSnapshot.key,
             ...childSnapshot.val()

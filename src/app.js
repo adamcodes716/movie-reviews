@@ -29,7 +29,7 @@ ReactDOM.render(<LoadingPage />, document.getElementById('app'));
 
 firebase.auth().onAuthStateChanged((user) => {  // runs on user login or logout
   if (user) {
-    console.log('log in. ', user.uid);
+    console.log('log in. ', user.displayName);
     store.dispatch(login(user.uid));  // update the store
     /*
     // will need to put in a command here to load store

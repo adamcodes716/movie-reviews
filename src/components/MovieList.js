@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux';  // connection to the store
 import MovieListItem from './MovieListItem';
+import selectMovies from '../selectors/movies';
 
 
 export const MovieList = (props) => (
@@ -11,6 +12,19 @@ export const MovieList = (props) => (
 
     </div>  
     <div className="list-body">
+      {
+        /*
+         props.movies.length === 0 ? (
+          <div className="liste-item--message">
+            <span><p>No Movies</p></span>
+          </div>
+        ) : (
+            props.movies.map((movie) => {  // iterate over the movie array
+              return <MovieListItem key={movie.id} {...movie} />;
+            })
+          )
+        */ 
+      }
     </div>
       {
        <div className="container"> 
@@ -50,19 +64,18 @@ export const MovieList = (props) => (
          </div>
        </div>
       </div> 
-
-
-
       }   
-
-
-     
-
-
   </div>
-
-  
-
 );
 
-export { MovieList as default }
+
+// export {Movielist as default};
+const mapStateToProps = (state) => {
+  console.log ('Mapping state to props');
+  return {
+    movies: selectMovies(state.movies, state.filters)
+    
+  };
+};
+
+export default connect(mapStateToProps)(MovieList);

@@ -22,8 +22,9 @@ export default (state = moviesReducerDefaultState, action) => {
           return movie;
         };
       });
-      case 'SET_MOVIE': // designed to just set movies array
-        return action.movie;
+      case 'SET_MOVIES': // designed to just set movies array
+      console.log ('REDUCER Set Movies');
+        return action.movies;
     default:
       return state;
   }
