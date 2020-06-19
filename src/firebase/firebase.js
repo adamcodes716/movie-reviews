@@ -9,7 +9,7 @@ const config = {
   messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID
 };
 
-console.log('config', config);
+// console.log('config', config);
 
 firebase.initializeApp(config);
 
