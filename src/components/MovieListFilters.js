@@ -33,14 +33,14 @@ export class MovieListFilters extends React.Component {
               type="text"
               className="text-input"
               placeholder="Search movies"
-              value={this.props.filters.text}
+           /*   value={this.props.filters.text}  */
               onChange={this.onTextChange}
             />
           </div>
           <div className="input-group__item">
             <select
               className="select"
-              value={this.props.filters.sortBy}
+           /*   value={this.props.filters.sortBy} */
               onChange={this.onSortChange}
               >
               <option value="date">Date</option>
@@ -49,8 +49,8 @@ export class MovieListFilters extends React.Component {
           </div>
           <div className="input-group__item">
             <DateRangePicker
-              startDate={this.props.filters.startDate}
-              endDate={this.props.filters.endDate}
+        /*      startDate={this.props.filters.startDate}
+              endDate={this.props.filters.endDate} */
               onDatesChange={this.onDatesChange}
               focusedInput={this.state.calendarFocused}
               onFocusChange={this.onFocusChange}

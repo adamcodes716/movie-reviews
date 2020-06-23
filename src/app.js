@@ -5,6 +5,7 @@ import AppRouter, { history } from './routers/AppRouter';
 import configureStore from './store/configureStore';
 import { startSetMovies } from './actions/movies';
 import { login, logout } from './actions/auth';
+import getVisibleMovies from './selectors/movies';
 import 'normalize.css/normalize.css';
 import './styles/styles.scss';
 import 'react-dates/lib/css/_datepicker.css';
@@ -31,14 +32,9 @@ firebase.auth().onAuthStateChanged((user) => {  // runs on user login or logout
   if (user) {
     console.log('log in. ', user.displayName);
     store.dispatch(login(user.uid));  // update the store
-    /*
-    // will need to put in a command here to load store
-    renderApp();
-    if (history.location.pathname === '/') {
-      history.push('/dashboard');
-    }
-    */
-   store.dispatch(startSetMovies()).then(() => {  // load movie dataset
+    console.log('finished login dispatch');
+    store.dispatch(startSetMovies()).then(() => {  // load movie dataset
+      console.log ('inside startSetMovies dispatch');
      renderApp();
       if (history.location.pathname ==='/') { // check to see if they are on login page - just logged in
         history.push('/dashboard');  // just logged in, redirect to dashboard

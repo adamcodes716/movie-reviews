@@ -13,15 +13,18 @@ export const MovieList = (props) => (
     </div>  
     <div className="list-body">
       {
-        
-         props.movies.length === 0 ? (
+          props.movies.length === 0 ? (
           <div className="liste-item--message">
             <span><p>No Movies</p></span>
           </div>
         ) : (
-            props.movies.map((movie) => {  // iterate over the movie array
-              return <MovieListItem key={movie.id} {...movie} />;
+            /*
+              props.movies.map((movie) => {  // iterate over the movie array
+                console.log ("about to iterate over props.movies");
+                return <MovieListItem key={movie.id} {...movie} />;
             })
+            */
+            <div> Movies! </div>
           )
         
       }
@@ -72,9 +75,10 @@ export const MovieList = (props) => (
 // export {Movielist as default};
 const mapStateToProps = (state) => {
   console.log ('Mapping state to props');
+  console.log('state.movies', state.movies);
+  console.log('state.filters', state.filters);
   return {
-    movies: selectMovies(state.movies, state.filters)
-    
+    movies: selectMovies(state.movies) // selectMovies(state.movies, state.filters)
   };
 };
 
