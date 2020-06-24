@@ -72,8 +72,8 @@ export const editMovie = (id, updates) => ({
   export const startEditMovie = (id, updates) => {
     return (dispatch, getState) => {
       const uid = getState().auth.uid
-      console.log("uid = ", uid);
-      console.log("id = ", id);
+     // console.log("uid = ", uid);
+     // console.log("id = ", id);
       return database.ref(`users/${uid}/movies/${id}`).update(updates).then(() => {
         dispatch(editMovies(id, updates));  // run this after codes is sync'd
       });
@@ -90,20 +90,20 @@ export const setMovies = (movies) => ({
   export const startSetMovies = () => {  // initial load of the movie dataset
     return (dispatch, getState) => {
       const uid = getState().auth.uid;
-      console.log ('uid', uid);
+     // console.log ('uid', uid);
       return database.ref(`users/${uid}/movies`).once('value').then((snapshot) => {
         const movies = [];
   
         snapshot.forEach((childSnapshot) => {
-            console.log ('getting a child', childSnapshot.key);
+          //  console.log ('getting a child', childSnapshot.key);
           movies.push({
             id: childSnapshot.key,
             ...childSnapshot.val()
           });
         });
-        console.log ('movies', movies);  // this returns 3 movies
+        // console.log ('movies', movies);  // this returns 3 movies
         dispatch(setMovies(movies));
-        console.log ('after dispatch set movies');
+        // console.log ('after dispatch set movies');
       });
     };
   };

@@ -3,6 +3,8 @@
 const moviesReducerDefaultState = [];
 
 export default (state = moviesReducerDefaultState, action) => {
+  //console.log ("REDUCER STATE", state);
+
   switch (action.type) {
     case 'ADD_MOVIE':
       return [
@@ -23,7 +25,7 @@ export default (state = moviesReducerDefaultState, action) => {
         };
       });
       case 'SET_MOVIES': // designed to just set movies array
-      console.log ('REDUCER Set Movies');
+     // console.log ('REDUCER Set Movies', action.movies);
         return action.movies;
     default:
       return state;

@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import AppRouter, { history } from './routers/AppRouter';
 import configureStore from './store/configureStore';
 import { startSetMovies } from './actions/movies';
+// import { setTextFilter} from './actions/filters';
 import { login, logout } from './actions/auth';
 import getVisibleMovies from './selectors/movies';
 import 'normalize.css/normalize.css';
@@ -32,9 +33,9 @@ firebase.auth().onAuthStateChanged((user) => {  // runs on user login or logout
   if (user) {
     console.log('log in. ', user.displayName);
     store.dispatch(login(user.uid));  // update the store
-    console.log('finished login dispatch');
+    // console.log('finished login dispatch');
     store.dispatch(startSetMovies()).then(() => {  // load movie dataset
-      console.log ('inside startSetMovies dispatch');
+      // console.log ('inside startSetMovies dispatch');
      renderApp();
       if (history.location.pathname ==='/') { // check to see if they are on login page - just logged in
         history.push('/dashboard');  // just logged in, redirect to dashboard

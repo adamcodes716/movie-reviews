@@ -74,11 +74,11 @@ export const MovieList = (props) => (
 
 // export {Movielist as default};
 const mapStateToProps = (state) => {
-  console.log ('Mapping state to props');
-  console.log('state.movies', state.movies);
-  console.log('state.filters', state.filters);
+  //console.log ('Mapping state to props');
+  //console.log('state.movies', state.movies);
+  //console.log('state.filters', state.filters);
   return {
-    movies: selectMovies(state.movies) // selectMovies(state.movies, state.filters)
+    movies: selectMovies(state.movies, state.filters) 
   };
 };
 
