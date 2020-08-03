@@ -8,7 +8,9 @@ import authReducer from '../reducers/auth';
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 export default () => {
-  const store = createStore(
+  const store = createStore(  
+    // pass in the reducers using combineReducers function
+    // pass in key pair.  Key is root state name, value is reducer that manages it
      combineReducers({
       movies: moviesReducer,
       filters: filtersReducer,

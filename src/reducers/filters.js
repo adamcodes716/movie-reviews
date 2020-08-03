@@ -5,8 +5,8 @@ import moment from 'moment';
 const filtersReducerDefaultState = {
   text: '',
   sortBy: 'date',
-  startDate: moment().startOf('month'),
-  endDate: moment().endOf('month')
+ // startDate: moment().startOf('month'),  // only show current month
+ // endDate: moment().endOf('month')  // only show current month
 };
 
 export default (state = filtersReducerDefaultState, action) => {
@@ -19,7 +19,7 @@ export default (state = filtersReducerDefaultState, action) => {
     case 'SORT_BY_AMOUNT':
       return {
         ...state,
-        sortBy: 'amount'
+        sortBy: 'rating' // amount
       };
     case 'SORT_BY_DATE':
       return {

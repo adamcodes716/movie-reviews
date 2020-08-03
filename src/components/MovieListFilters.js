@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { DateRangePicker } from 'react-dates';
 import { setTextFilter, sortByDate, sortByAmount, setStartDate, setEndDate } from '../actions/filters';
+import { Link } from 'react-router-dom';
 
 export class MovieListFilters extends React.Component {
   state = {
@@ -20,7 +21,7 @@ export class MovieListFilters extends React.Component {
   onSortChange = (e) => {
     if (e.target.value === 'date') {
       this.props.sortByDate();
-    } else if (e.target.value === 'amount') {
+    } else if (e.target.value === 'rating') {
       this.props.sortByAmount();
     }
   };
@@ -33,24 +34,24 @@ export class MovieListFilters extends React.Component {
               type="text"
               className="text-input"
               placeholder="Search movies"
-           /*   value={this.props.filters.text}  */
+              value={this.props.filters.text}  
               onChange={this.onTextChange}
             />
           </div>
           <div className="input-group__item">
             <select
               className="select"
-           /*   value={this.props.filters.sortBy} */
+              value={this.props.filters.sortBy} 
               onChange={this.onSortChange}
               >
               <option value="date">Date</option>
-              <option value="amount">Amount</option>
+              <option value="rating">Rating</option>
             </select>  
           </div>
           <div className="input-group__item">
             <DateRangePicker
-        /*      startDate={this.props.filters.startDate}
-              endDate={this.props.filters.endDate} */
+              startDate={this.props.filters.startDate}
+              endDate={this.props.filters.endDate} 
               onDatesChange={this.onDatesChange}
               focusedInput={this.state.calendarFocused}
               onFocusChange={this.onFocusChange}
@@ -59,11 +60,12 @@ export class MovieListFilters extends React.Component {
               isOutsideRange={() => false}
             />
           </div>
-        </div>  
-        
-        
-        
-      </div>
+        </div> 
+        <div className="page-header__actions">
+           <Link className="button" to="/create">Add Movie Review</Link>
+        </div> 
+     </div>
+     
     );
   }
 };

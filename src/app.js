@@ -13,7 +13,10 @@ import 'react-dates/lib/css/_datepicker.css';
 import { firebase } from './firebase/firebase';
 import LoadingPage from './components/LoadingPage';
 
+// documentation:  https://docs.google.com/document/d/1mz1dTSLlgrKobQEvY4E5raYqlUXHpmXOVCzo78mYmvk/edit?usp=sharing
+
 const store = configureStore();
+//Router AppRouter is rendered inside of “Provider” which makes the Redux store available to any nested components.  
 const jsx = (
   <Provider store={store}>
     <AppRouter />
@@ -27,6 +30,7 @@ const renderApp = () => {
   }
 };
 
+//Render loadingPage to show while page is loading
 ReactDOM.render(<LoadingPage />, document.getElementById('app'));
 
 firebase.auth().onAuthStateChanged((user) => {  // runs on user login or logout

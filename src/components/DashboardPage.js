@@ -4,8 +4,7 @@ import MovieList from './MovieList';
 
 const DashboardPage = () => (
   <div>
-    Dashboard page content
-      <MovieListFilters /> 
+     <MovieListFilters /> 
      <MovieList />
   </div>
 );

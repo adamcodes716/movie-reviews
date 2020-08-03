@@ -15,7 +15,7 @@ export default (movies, { text, sortBy, startDate, endDate }) => {
     if (sortBy === 'date') {
       return a.createdAt < b.createdAt ? 1 : -1;
     } else if (sortBy === 'rating') {
-      return a.amount < b.amount ? 1 : -1;
+      return a.rating < b.rating ? 1 : -1;
     }
   });
 };

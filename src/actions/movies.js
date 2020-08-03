@@ -18,8 +18,11 @@ export const startAddMovie = (movieData = {}) => {
         ratingComment = '',
         rating = '',
         createdAt = 0,
+        movieId = '',
+        imageUrl = '', 
+        displayName = ''
       } = movieData;
-      const movie = { title, ratingComment, rating, createdAt };
+      const movie = { title, ratingComment, rating, createdAt, imageUrl, movieId, displayName };
   
       // database.ref(`users/${uid}/movies`).child('1234').set(movie);
         
@@ -28,13 +31,12 @@ export const startAddMovie = (movieData = {}) => {
      
      
      //database.ref(`users/${uid}/movies`).child('1234').setValue(...movie);
-  
+  //auth.displayName
      // return database.ref(`users/${uid}/movies`).child('1234').setValue(movie).then((ref) => {
         return database.ref(`users/${uid}/movies`).push(movie).then((ref) => {
             dispatch(addMovie({
-            id: '56778', //ref.key,
-            key: '56778',
-            displayName : auth.displayName,
+            id: ref.key,
+            displayName = "Adam",
             ...movie
             }));
         });

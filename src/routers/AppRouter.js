@@ -11,8 +11,9 @@ import PublicRoute from './PublicRoute';
 
 export const history = createHistory();
 
+// note that we get handle to browser's history
 const AppRouter = () => (
-  <Router history={history}>
+  <Router history={history}>  
     <div>
       <Switch>
         <PublicRoute path="/" component={LoginPage} exact={true} />
