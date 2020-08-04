@@ -36,7 +36,7 @@ export const startAddMovie = (movieData = {}) => {
         return database.ref(`users/${uid}/movies`).push(movie).then((ref) => {
             dispatch(addMovie({
             id: ref.key,
-            displayName = "Adam",
+           // displayName = "Adam",
             ...movie
             }));
         });
