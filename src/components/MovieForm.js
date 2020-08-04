@@ -1,12 +1,14 @@
 import React from 'react';
 import moment from 'moment';
 import { SingleDatePicker } from 'react-dates';
+import { firebase } from 'firebase';
 import { auth } from 'firebase';
+import uuid from 'uuid';
 
 export default class MovieForm extends React.Component {
   constructor(props) { 
     super(props);  // calls parent constructor, lets us use "this"
-
+   
     this.state = {
       id: props.movie ? props.movie.id : '',
       movieId: props.movie ? props.movie.movieId : '',
@@ -15,13 +17,14 @@ export default class MovieForm extends React.Component {
       rating: props.movie ? (props.movie.rating) : '',
       createdAt: props.movie ? moment(props.movie.createdAt) : moment(),
       imageUrl : props.movie ? props.movie.imageUrl : '',
-      displayName : !props.movie ? 'Adam' : props.movie.displayName,
       calendarFocused: false,
       error: ''
     };
   }
   onTitleChange = (e) => {
     const title = e.target.value;
+    
+    //console.log ("display name = " + getState().auth.displayName);
     this.setState(() => ({ title }));
   };
   onMovieIdChange = (e) => {
@@ -65,8 +68,7 @@ export default class MovieForm extends React.Component {
         createdAt: this.state.createdAt.valueOf(),
         ratingComment: this.state.ratingComment,
         movieId: this.state.movieId,
-        imageUrl : this.state.imageUrl,
-        displayName : "Adam"
+        imageUrl : this.state.imageUrl
       });
     }
   };

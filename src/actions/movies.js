@@ -13,6 +13,8 @@ export const startAddMovie = (movieData = {}) => {
     // second argument "getState".  Call it to get current state
     return (dispatch, getState) => {
       const uid = getState().auth.uid; 
+      const reviewerName = getState().auth.displayName;
+      console.log ('reviewerName=' +  reviewerName)
       const {
         title = '',
         ratingComment = '',
@@ -20,7 +22,7 @@ export const startAddMovie = (movieData = {}) => {
         createdAt = 0,
         movieId = '',
         imageUrl = '', 
-        displayName = ''
+        displayName = reviewerName
       } = movieData;
       const movie = { title, ratingComment, rating, createdAt, imageUrl, movieId, displayName };
   
@@ -36,8 +38,7 @@ export const startAddMovie = (movieData = {}) => {
         return database.ref(`users/${uid}/movies`).push(movie).then((ref) => {
             dispatch(addMovie({
             id: ref.key,
-           // displayName = "Adam",
-            ...movie
+                ...movie
             }));
         });
       

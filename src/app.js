@@ -5,7 +5,7 @@ import AppRouter, { history } from './routers/AppRouter';
 import configureStore from './store/configureStore';
 import { startSetMovies } from './actions/movies';
 // import { setTextFilter} from './actions/filters';
-import { login, logout } from './actions/auth';
+import { login, logout, loginName } from './actions/auth';
 import getVisibleMovies from './selectors/movies';
 import 'normalize.css/normalize.css';
 import './styles/styles.scss';
@@ -36,8 +36,9 @@ ReactDOM.render(<LoadingPage />, document.getElementById('app'));
 firebase.auth().onAuthStateChanged((user) => {  // runs on user login or logout
   if (user) {
     console.log('log in. ', user.displayName);
-    store.dispatch(login(user.uid));  // update the store
-    // console.log('finished login dispatch');
+    store.dispatch(login(user.uid, user.displayName));  // update the store
+   // store.dispatch(loginName(user.displayName));  // update the store
+     console.log('finished login dispatch');
     store.dispatch(startSetMovies()).then(() => {  // load movie dataset
       // console.log ('inside startSetMovies dispatch');
      renderApp();

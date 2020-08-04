@@ -3,7 +3,7 @@ import moment from 'moment';
 import numeral from 'numeral';
 import { Link } from 'react-router-dom';
 
-const MovieListItem = ({id, createdAt, imgUrl, rating, title, imageUrl}) => (
+const MovieListItem = ({id, createdAt, imgUrl, rating, title, imageUrl, displayName}) => (
     <div className="movie-card">
     <div className="movie-header movie-cover" style={{ backgroundImage: `url('${imageUrl}')` }}>
       <div className="header-icon-container">
@@ -17,12 +17,17 @@ const MovieListItem = ({id, createdAt, imgUrl, rating, title, imageUrl}) => (
         <a href={`/edit/${id}`}>
           <h3 className="movie-title">{title}</h3>
         </a>
-        <div className="imax-logo"></div>
+        <span>{rating}</span>
+        <div className="imax-logo1"></div>
       </div>
       <div className="movie-info">
         <div className="info-section">
           <label>Review Date</label>
-          <span>{moment(createdAt).format('MMMM Do, YYYY')}</span>
+          <span>{moment(createdAt).format('MM/DD/YYYY')}</span>
+        </div>
+        <div className="info-section">
+          <label>Reviewer</label>
+          <span>{displayName}</span>
         </div>
         <div className="info-section">
           <label>Rating</label>
