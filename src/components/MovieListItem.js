@@ -17,7 +17,6 @@ const MovieListItem = ({id, createdAt, imgUrl, rating, title, imageUrl, displayN
         <a href={`/edit/${id}`}>
           <h3 className="movie-title">{title}</h3>
         </a>
-        <span>{rating}</span>
         <div className="imax-logo1"></div>
       </div>
       <div className="movie-info">

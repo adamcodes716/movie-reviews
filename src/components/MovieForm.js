@@ -1,9 +1,10 @@
 import React from 'react';
 import moment from 'moment';
 import { SingleDatePicker } from 'react-dates';
-import { firebase } from 'firebase';
-import { auth } from 'firebase';
+// import { firebase } from 'firebase';
+// import { auth } from 'firebase';
 import uuid from 'uuid';
+//const TMDBLogo = "../images/tmdb.svg";
 
 export default class MovieForm extends React.Component {
   constructor(props) { 
@@ -18,15 +19,72 @@ export default class MovieForm extends React.Component {
       createdAt: props.movie ? moment(props.movie.createdAt) : moment(),
       imageUrl : props.movie ? props.movie.imageUrl : '',
       calendarFocused: false,
-      error: ''
+      error: '',
+      suggestions: [],
+      text: '',
+      isLoaded: false,
+      movieSelected: props.movie ? true : false,
     };
   }
+
+  componentDidMount() {
+     this.fetchMovies(' ');
+}
+
+fetchMovies (query)  {
+  fetch('https://api.themoviedb.org/3/search/movie?query=' + query + '&api_key=cfe422613b250f702980a3bbf9e90716')
+  .then(res => res.json())
+  .then(json => {
+      this.setState({
+          isLoaded: true,
+          suggestions: json,
+      })
+  });
+}
+
+onTextChanged = (e) => {
+  this.onTitleChange(e);
+  const value = e.target.value;
+  let suggestions = [];
+  if (value.length > 0 ) {
+    // suggestions = this.items.sort().filter(v => regex.test(v));
+    this.fetchMovies(value);
+  }
+  this.setState(() => ({ suggestions, text: value, title: value, poster_image: '', id: '' }));
+}
+
+suggestionSelected (value) {
+  this.setState(() => ({
+      text: value.original_title,
+      title: value.original_title,
+      movieId: value.id,
+      imageUrl: 'https://image.tmdb.org/t/p/w500' + value.poster_path,
+      movieSelected: true,
+      suggestions: [],
+  }))
+}
+
+renderSuggestions () {
+  const { suggestions } = this.state;
+  if (suggestions.length === 0){
+      return null;
+  }
+  return (
+    <ul>
+      {suggestions.results.map((item) => <li key={item.id} onClick={() => this.suggestionSelected(item)}>{item.original_title}</li>)}
+    </ul>
+  );
+}
+
+  handleChange(event) {
+    event.target.select();
+  }
+
   onTitleChange = (e) => {
     const title = e.target.value;
-    
-    //console.log ("display name = " + getState().auth.displayName);
     this.setState(() => ({ title }));
   };
+
   onMovieIdChange = (e) => {
     const movieId = e.target.value;
     this.setState(() => ({ movieId }));
@@ -37,15 +95,15 @@ export default class MovieForm extends React.Component {
   };
   onImageUrlChange = (e) => {
     const imageUrl = e.target.value;
-    console.log ("Changing image URL");
     this.setState(() => ({ imageUrl }));
   };
   onRatingChange = (e) => {
     const rating = e.target.value;
 
-   // if (!rating || rating.match(/^\d{1,}(\.\d{0,2})?$/)) {
+    if (!rating || rating.match(/^(10|\d)(\.\d{1,2})?$/)) {
+   // if (!rating || rating.match(/^(10|\d)+(\.\d{1,2})?$/)) {
       this.setState(() => ({ rating }));
-   //  }
+     }
   };
   onDateChange = (createdAt) => {
     if (createdAt) {
@@ -58,7 +116,7 @@ export default class MovieForm extends React.Component {
   onSubmit = (e) => {
     e.preventDefault();
 
-    if (!this.state.title || !this.state.rating || !this.state.ratingComment   || !this.state.movieId   || !this.state.imageUrl  || !this.state.createdAt) {
+    if (!this.state.title || !this.state.rating  || !this.state.movieId   || !this.state.imageUrl  || !this.state.createdAt) {
       this.setState(() => ({ error: 'All fields are required' }));
     } else {
       this.setState(() => ({ error: '' }));
@@ -73,58 +131,75 @@ export default class MovieForm extends React.Component {
     }
   };
   render() {
+    const { text, isLoaded, items, poster_image, id, imageUrl, movieSelected } = this.state;
+
     return (
+     
+      
        <form className="form" onSubmit={this.onSubmit}>
-          <p><b>Note that it might take 10 seconds for a new review to show up.  Firebase can be slow! </b></p>
+
+          <p><b>Note that it might take 10 seconds for a new review to show up on the homepage.  Firebase can be slow! </b></p>
           {this.state.error && <p className="form__error">{this.state.error}</p>}
           <input
             type="text"
-            placeholder="Title"
+            placeholder="Title - start typing to search"
+            onChange={this.onTextChanged}
             autoFocus
             className="text-input"
             value={this.state.title}
-             onChange={this.onTitleChange} 
           />
-          <input
-            type="text"
-            placeholder="Movie Id"
-            className="text-input"
-            value={this.state.movieId}
-             onChange={this.onMovieIdChange} 
-          />
-          <input
-            type="text"
-            className="text-input"
-            placeholder="Rating"
-            value={this.state.rating}
-            onChange={this.onRatingChange} 
-          />
-          <input
-            type="text"
-            className="text-input"
-            placeholder="Movie Poster URL"
-            value={this.state.imageUrl}
-            onChange={this.onImageUrlChange} 
-          />
-          <p>You can use this URL if you'd like:  https://tinyurl.com/y3kls5w3</p>
-          <SingleDatePicker
-            date={this.state.createdAt}
-            onDateChange={this.onDateChange}
-            focused={this.state.calendarFocused}
-            onFocusChange={this.onFocusChange}
-            numberOfMonths={1}
-            isOutsideRange={() => false}
-          />
+          {this.renderSuggestions()}
+          <div className="input-group">         
+            <div className="input-group__item">
+              <input
+                type="text"
+                className="text-input"
+                placeholder="Rating (0 - 10)"
+                value={this.state.rating}
+                onChange={this.onRatingChange} 
+              />  
+            </div>        
+            
+            <div className="input-group__item">
+              <SingleDatePicker
+                date={this.state.createdAt}
+                onDateChange={this.onDateChange}
+                focused={this.state.calendarFocused}
+                onFocusChange={this.onFocusChange}
+                numberOfMonths={1}
+                isOutsideRange={() => false}
+              />
+            </div>  
+          </div>
           <textarea
-            placeholder="Add a note for your Movie Review"
+            placeholder="Add a comment (optional)"
             className="textarea"
             value={this.state.ratingComment}
             onChange={this.onRatingCommentChange}
           >
           </textarea>
+          <input
+              type="text"
+              className="text-input"
+              placeholder="Movie Poster URL"
+              value={this.state.imageUrl} disabled
+              style={{display: 'none' }}
+              onChange={this.onImageUrlChange} 
+            />
+            <input
+              type="text"
+              placeholder="Movie Id"
+              className="text-input"
+              value={this.state.movieId} disabled
+              style={{display: 'none' }}
+              onChange={this.onMovieIdChange} 
+            />
           <div>
             <button className="button">Save Movie Review</button>
           </div>
+          <div className="movie-card" style={{display:  movieSelected ? 'block' : 'none' }} >
+             <img className= "movie-header movie-cover" src={imageUrl}/>
+        </div>
         </form>
     )
   }

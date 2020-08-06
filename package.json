@@ -1,8 +1,8 @@
 {
-  "name": "boilerplate-react-app",
+  "name": "react-movie-review",
   "version": "1.0.0",
   "main": "index.js",
-  "author": "Andrew Mead",
+  "author": "Adam Morgan",
   "license": "MIT",
   "scripts": {
     "build:dev": "webpack",
